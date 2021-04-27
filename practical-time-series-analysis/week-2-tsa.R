@@ -34,4 +34,8 @@ plot(star, main='Magnitude of a start taken at midnight for 600 consecutive days
 # - No periodic fluctuation
 
 #-----
-# ## Auto-covariance function
+# ## Auto-covariance function, gamma(s, t):
+# (mu_s = moving average till time 's', mu_t = moving average till time 't');
+# - gamma(s, t) = Cov(Xs, Xt) = E[(Xs - mu_s)(Xt - mu_t)]
+# - gamma(t, t) = Var(Xt) = sigma_t^2
+# - gamma_k = gamma(t, t+k) = c_k (auto-covariance coefficients)
