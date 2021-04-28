@@ -73,3 +73,39 @@ acf(random_walk)
 plot(diff(random_walk))
 # we can see by the help of `acf` function that it is just pure random noise with no correlation
 acf(diff(random_walk))
+
+#-----
+# ## Introduction to moving averages
+# Moving average model of order 2: MA(q=2), 'q' is the order of the moving average model
+# MA(q) = X_t = Z_t + C_1 Z_{t-1} + ... + C_q Z_{t-q}
+# Z_i are i.i.d & Z_i ~ Normal(mu, sigma^2)      
+# [i.i.d: Independent and identically distributed random variable]
+
+#-----
+# ## Simulating MA(2) process
+# X_t = Z_t + C_1 Z_1 + C_2 Z_2; C_i = constant coefficients representing the weights
+# Z_i are i.i.d
+# In this simulation we will use: C_1=0.7, C_2=0.2 and Z_t ~ Normal(0, 1)
+# generate noise
+noise = rnorm(10000)
+
+# introduce a variable
+ma_2 = NULL
+
+# loop for generating MA(2) process
+for(i in 3:10000){
+        ma_2[i] = noise[i] + 0.7*noise[i-1] + 0.2*noise[i-2]
+}
+
+# shift data to left by 2 units
+moving_average_process = ma_2[3:10000]
+
+# put time series structure to the data
+moving_average_process = ts(moving_average_process)
+
+# partition output graphics as a multi frame of 2 rows and 1 column
+par(mfrow=c(2, 1))
+
+# plot the process and plot its ACF
+plot(moving_average_process, main='Moving average process of order 2', ylab=' ', col='blue')
+acf(moving_average_process, main='Correlogram of the moving average process')
