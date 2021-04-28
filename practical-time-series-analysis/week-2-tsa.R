@@ -29,15 +29,15 @@ plot(star, main='Magnitude of a start taken at midnight for 600 consecutive days
 
 #-----
 # ## Intuition about stationarity
-# - Weak Stationary time-series means no systematic change in the mean, i.e. No trend 
+# - Weak Stationary time-series means no systematic change in the mean, i.e. no trend 
 # - No systematic change in the variation
 # - No periodic fluctuation
 
 #-----
 # ## Autocovariance function, gamma(s, t):
 # (mu_s = moving average till time 's', mu_t = moving average till time 't');
-# - gamma(s, t) = Cov(Xs, Xt) = E[(Xs - mu_s)(Xt - mu_t)]
-# - gamma(t, t) = Var(Xt) = sigma_t^2
+# - gamma(s, t) = Cov(X_s, X_t) = E[(X_s - mu_s)(X_t - mu_t)]
+# - gamma(t, t) = Var(X_t) = sigma_t^2
 # - gamma_k = gamma(t, t+k) = c_k (autocovariance coefficients) (assuming weak stationarity)
 
 #-----
@@ -51,3 +51,25 @@ print(purely_random_process)
 # ## Autocorrelation function (assume weak stationarity)
 # - r_k = c_k / c0  (autocorrelation coefficient at lag 'k')
 (acf(purely_random_process, main='Correlogram of a purely random process'))
+
+#-----
+# ## Random Walks
+# - X_t = X_{t-1} + Z_t; Z_t ~ Normal(mu, sigma^2)
+x = NULL
+x[1] = 0
+for(i in 2:1000){
+        x[i] = x[i-1] + rnorm(1)
+}
+print(x)
+plot(x, main='Simulated data for random walk (no time-series)')
+# creating a time series from our random variable
+random_walk = ts(x)
+plot(random_walk, main='Random walk', ylab=' ', xlab='Days', col='blue', lwd=2)
+# random walk is not a stationary time series, meaning there is no point to calculate 
+# the autocorrelation of it (there would be very high correlation). Nevertheless, let's 
+# calculate it and see what we find out.
+acf(random_walk)
+# let's see if the difference is stationary (it should be since it is just purely a random process)
+plot(diff(random_walk))
+# we can see by the help of `acf` function that it is just pure random noise with no correlation
+acf(diff(random_walk))
