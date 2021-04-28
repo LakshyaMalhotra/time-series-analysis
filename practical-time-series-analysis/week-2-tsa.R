@@ -46,3 +46,8 @@ purely_random_process = ts(rnorm(100))
 print(purely_random_process)
 # print autocovariance 
 (acf(purely_random_process, type='covariance'))
+
+#-----
+# ## Autocorrelation function (assume weak stationarity)
+# - r_k = c_k / c0  (autocorrelation coefficient at lag 'k')
+(acf(purely_random_process, main='Correlogram of a purely random process'))
